@@ -20,7 +20,7 @@ const menuItems = [
       </div>
     ) 
   },
-  { id: 3, label: "Laboratorium 2", url: "/lab2", urlPattern: "/lab2", element: <Lab2 /> }
+  { id: 3, label: "Laboratorium 2", url: "/lab2/:id", urlPattern: "/lab2/:id", element: <Lab2 /> }
 ];
 
 function App() {

@@ -1,7 +1,27 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import { data } from '../module-data.js'; // Upewnij się, że importujesz dane
 
 function Lab2() {
-    return <h1>Laboratorium 2 - Profil osoby</h1>;
+    const { id } = useParams();
+    const person = data.find(p => p.id.toString() === id); // Wyszukaj osobę według id
+
+    if (!id) {
+        return <h1>Brak identyfikatora osoby.</h1>;
+    }
+
+    if (!person) {
+        return <h1>Nie znaleziono osoby o tym identyfikatorze.</h1>;
+    }
+
+    return (
+        <div>
+            <h1>Profil osoby</h1>
+            <p>Name: {person.name}</p>
+            <p>Birth: {person.birth}</p>
+            <p>Eyes: {person.eyes}</p>
+        </div>
+    );
 }
 
 export default Lab2;

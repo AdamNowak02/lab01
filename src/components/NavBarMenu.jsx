@@ -9,7 +9,7 @@ function NavBarMenu({ items }) {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                     {items.map(item => (
-                        <Nav.Link key={item.id} href={`/${item.label.toLowerCase()}`}>
+                        <Nav.Link href={item.url} key={item.id}>
                             {item.label}
                         </Nav.Link>
                     ))}
