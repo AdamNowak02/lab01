@@ -1,23 +1,19 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { data } from './module-data'; // Importuj wygenerowane dane
+import PersonProfile from './PersonProfile'; // Importuj komponent
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     
+      <main>
+        <h1>Person Profiles</h1>
+        {data.map(person => (
+          <PersonProfile key={person.id} person={person} /> // Generowanie komponentów dla każdego obiektu
+        ))}
+      </main>
     </div>
   );
 }
