@@ -9,28 +9,27 @@ import { data } from './module-data.js';
 import PersonProfile from './components/PersonProfile'; 
 
 const menuItems = [
-  { id: 1, label: "Home" },
-  { id: 2, label: "Laboratorium 1" },
-  { id: 3, label: "Laboratorium 2" }
+  { id: 1, label: "Home", url: "/", urlPattern: "/", element: <Home /> },
+  { id: 2, label: "Laboratorium 1", url: "/lab1", urlPattern: "/lab1", 
+    element: (
+      <div>
+        <h1>Laboratorium 1</h1>
+        {data.map(person => (
+          <PersonProfile key={person.id} person={person} />
+        ))}
+      </div>
+    ) 
+  },
+  { id: 3, label: "Laboratorium 2", url: "/lab2", urlPattern: "/lab2", element: <Lab2 /> }
 ];
 
 function App() {
   return (
     <RootLayout items={menuItems}>
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route 
-          path="/lab1" 
-          element={
-            <div>
-              <h1>Laboratorium 1</h1>
-              {data.map(person => (
-                <PersonProfile key={person.id} person={person} /> // Generowanie komponentów dla każdego obiektu
-              ))}
-            </div>
-          } 
-        />
-        <Route path="/lab2" element={<Lab2 />} />
+        {menuItems.map(item => (
+          <Route key={item.id} path={item.urlPattern} element={item.element} />
+        ))}
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </RootLayout>
