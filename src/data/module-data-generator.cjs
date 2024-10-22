@@ -16,8 +16,9 @@ fs.readFile('./names.txt', 'utf8', (err, data) => {
         const name = names[randomIndex];
         const birth = new Date(2000 + Math.floor(Math.random() * 20), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28 + 1)).toISOString().split('T')[0];
         const eyes = ['blue', 'brown', 'green'][Math.floor(Math.random() * 3)];
+        const rating = Math.floor(Math.random() * 11); // losowy rating od 0 do 10
         
-        content += `  { id: ${i + 1}, name: "${name}", birth: "${birth}", eyes: "${eyes}" },\n`;
+        content += `  { id: ${i + 1}, name: "${name}", birth: "${birth}", eyes: "${eyes}", rating: ${rating} },\n`;
     }
     content += "];";
 
