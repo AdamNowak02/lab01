@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { Container, Card } from 'react-bootstrap';
 import { data } from '../module-data.js';
 
 function Lab2() {
@@ -15,12 +16,18 @@ function Lab2() {
     }
 
     return (
-        <div>
-            <h1>Profil osoby</h1>
-            <p>Imie: {person.name}</p>
-            <p>Data urodzenia: {person.birth}</p>
-            <p>Kolor oczu: {person.eyes}</p>
-        </div>
+        <Container className="mt-5">
+            <h1 className="text-center mb-4" style={{ backgroundColor: '#e0f7fa', padding: '10px', borderRadius: '5px' }}>Profil osoby</h1>
+            
+            {/* Karta z informacjami o osobie */}
+            <Card className="shadow-sm">
+                <Card.Body>
+                    <Card.Text><strong>Imię:</strong> {person.name}</Card.Text>
+                    <Card.Text><strong>Data urodzenia:</strong> {person.birth}</Card.Text>
+                    <Card.Text><strong>Kolor oczu:</strong> {person.eyes}</Card.Text>
+                </Card.Body>
+            </Card>
+        </Container>
     );
 }
 

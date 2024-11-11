@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Container, Form, FormControl } from "react-bootstrap";
+import { Button, Container, Form, Alert, Row, Col } from "react-bootstrap";
 import { AppContext } from "../data/AppContext";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +27,8 @@ const Lab4Add = () => {
     const onSubmitFunction = async (e) => {
         e.preventDefault();
         setErrors([]);
-// Walidacja
+
+        // Walidacja
         const newErrors = [];
         if (!formData.name) newErrors.push("Nazwa jest wymagana.");
         if (!formData.birth) newErrors.push("Data urodzenia jest wymagana.");
@@ -45,7 +46,7 @@ const Lab4Add = () => {
 
         dispatch({ type: "ADD", payload: { ...formData, id: Date.now() } });
 
-        // Reset formularza (outdated bo dodałem przekierowanie)
+        // Reset formularza
         setFormData({
             name: "",
             birth: "",
@@ -58,61 +59,84 @@ const Lab4Add = () => {
     };
 
     return (
-        <Container>
-            <h1>Dodawanie osoby</h1>
-            <div className="text-danger">{errors.map((e, i) => <p key={i}>{e}</p>)}</div>
-            <Form className="text-primary" onSubmit={onSubmitFunction}>
-                <Form.Group className="mb-3">
-                    <Form.Label htmlFor="name">Nazwa</Form.Label>
-                    <FormControl
-                        required
-                        id="name"
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Enter name"
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label htmlFor="birth">Data urodzenia</Form.Label>
-                    <FormControl
-                        required
-                        id="birth"
-                        type="date"
-                        name="birth"
-                        value={formData.birth}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label htmlFor="eyes">Kolor oczu</Form.Label>
-                    <FormControl
-                        required
-                        id="eyes"
-                        type="text"
-                        name="eyes"
-                        value={formData.eyes}
-                        onChange={handleChange}
-                        placeholder="Enter eye color"
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label htmlFor="rating">Ocena (0-10)</Form.Label>
-                    <FormControl
-                        required
-                        id="rating"
-                        type="number"
-                        name="rating"
-                        min="0"
-                        max="10"
-                        value={formData.rating}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-                <div className="d-grid">
-                    <Button disabled={isSending} type="submit" variant="outline-primary" size="lg">
-                        Dodaj osobę
+        <Container className="mt-5">
+            <h1 className="text-center mb-4">Dodawanie osoby</h1>
+
+            {/* Błędy formularza */}
+            {errors.length > 0 && (
+                <Alert variant="danger" className="mb-3">
+                    {errors.map((error, index) => (
+                        <div key={index}>{error}</div>
+                    ))}
+                </Alert>
+            )}
+
+            {/* Formularz */}
+            <Form className="p-4 border rounded shadow-sm bg-light" onSubmit={onSubmitFunction}>
+                <Row className="mb-3">
+                    <Col>
+                        <Form.Label htmlFor="name">Nazwa</Form.Label>
+                        <Form.Control
+                            required
+                            id="name"
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Wprowadź nazwę"
+                        />
+                    </Col>
+                </Row>
+
+                <Row className="mb-3">
+                    <Col>
+                        <Form.Label htmlFor="birth">Data urodzenia</Form.Label>
+                        <Form.Control
+                            required
+                            id="birth"
+                            type="date"
+                            name="birth"
+                            value={formData.birth}
+                            onChange={handleChange}
+                        />
+                    </Col>
+                </Row>
+
+                <Row className="mb-3">
+                    <Col>
+                        <Form.Label htmlFor="eyes">Kolor oczu</Form.Label>
+                        <Form.Control
+                            required
+                            id="eyes"
+                            type="text"
+                            name="eyes"
+                            value={formData.eyes}
+                            onChange={handleChange}
+                            placeholder="Wprowadź kolor oczu"
+                        />
+                    </Col>
+                </Row>
+
+                <Row className="mb-4">
+                    <Col>
+                        <Form.Label htmlFor="rating">Ocena (0-10)</Form.Label>
+                        <Form.Control
+                            required
+                            id="rating"
+                            type="number"
+                            name="rating"
+                            min="0"
+                            max="10"
+                            value={formData.rating}
+                            onChange={handleChange}
+                        />
+                    </Col>
+                </Row>
+
+                {/* Przycisk do dodania osoby */}
+                <div className="text-center">
+                    <Button disabled={isSending} type="submit" className="btn btn-success px-5">
+                        {isSending ? "Dodawanie..." : "Dodaj osobę"}
                     </Button>
                 </div>
             </Form>
