@@ -1,17 +1,15 @@
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { AppContext } from '../data/AppContext';
 
-function FlexContainer({ element: Element, data }) {
+function FlexContainer({ element: Element }) {
+  const { items } = useContext(AppContext);
+
   return (
-    <Container>
-      <Row>
-        {data.map(item => (
-          <Col key={item.id} xs={12} sm={6} md={4} lg={3} className="mb-3">
-            <Element {...item} />
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <div className="d-flex flex-wrap">
+      {items.map(item => (
+        <Element key={item.id} person={item} />
+      ))}
+    </div>
   );
 }
 
