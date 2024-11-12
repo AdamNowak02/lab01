@@ -3,8 +3,12 @@ import { Button, Container, Form, Alert, Row, Col } from "react-bootstrap";
 import { AppContext } from "../data/AppContext";
 import { useNavigate } from "react-router-dom";
 
+// Komponent do dodawania nowej osoby
 const Lab4Add = () => {
+    // Pobranie dispatch z kontekstu aplikacji do zarządzania stanem
     const { dispatch } = useContext(AppContext);
+    
+    // Stany do zarządzania błędami, stanem wysyłki formularza oraz danymi formularza
     const [errors, setErrors] = useState([]);
     const [isSending, setSending] = useState(false);
     const [formData, setFormData] = useState({
@@ -14,8 +18,13 @@ const Lab4Add = () => {
         rating: 0,
     });
 
+    // Hook do nawigacji po operacjach
     const navigate = useNavigate();
 
+    /**
+     * Funkcja obsługująca zmiany w polach formularza
+     * @param {Object} e - Obiekt zdarzenia
+     */
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -24,29 +33,36 @@ const Lab4Add = () => {
         }));
     };
 
+    /**
+     * Funkcja obsługująca wysłanie formularza
+     * @param {Object} e - Obiekt zdarzenia
+     */
     const onSubmitFunction = async (e) => {
-        e.preventDefault();
-        setErrors([]);
+        e.preventDefault(); // Zapobiega domyślnej akcji formularza
+        setErrors([]); // Resetowanie błędów
 
-        // Walidacja
+        // Walidacja danych formularza
         const newErrors = [];
-        if (!formData.name) newErrors.push("Nazwa jest wymagana.");
-        if (!formData.birth) newErrors.push("Data urodzenia jest wymagana.");
-        if (!formData.eyes) newErrors.push("Kolor oczu jest wymagany.");
-        if (formData.rating < 0 || formData.rating > 10) newErrors.push("Ocena musi być w przedziale 0-10.");
+        if (!formData.name) newErrors.push("Nazwa wymagana.");
+        if (!formData.birth) newErrors.push("Data urodzenia wymagana.");
+        if (!formData.eyes) newErrors.push("Kolor oczu wymagany.");
+        if (formData.rating < 0 || formData.rating > 10) newErrors.push("Ocena musi być między 0 a 10");
 
+        // Jeśli są błędy, ustawiamy je w stanie i przerywamy dalsze działanie
         if (newErrors.length > 0) {
             setErrors(newErrors);
             return;
         }
 
-        setSending(true);
+        setSending(true); // Ustawienie stanu wysyłania formularza
+        // Symulacja opóźnienia (np. oczekiwanie na odpowiedź serwera)
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        setSending(false);
+        setSending(false); // Zakończenie stanu wysyłania
 
+        // Dispatch akcji dodania nowej osoby do globalnego stanu
         dispatch({ type: "ADD", payload: { ...formData, id: Date.now() } });
 
-        // Reset formularza
+        // Resetowanie danych formularza po dodaniu osoby
         setFormData({
             name: "",
             birth: "",
@@ -54,15 +70,16 @@ const Lab4Add = () => {
             rating: 0,
         });
 
-        // Przekierowanie do Lab3
+        // Przekierowanie użytkownika do strony Lab3 po dodaniu osoby
         navigate("/lab3");
     };
 
+    // Renderowanie komponentu
     return (
         <Container className="mt-5">
             <h1 className="text-center mb-4">Dodawanie osoby</h1>
 
-            {/* Błędy formularza */}
+            {/* Wyświetlanie błędów formularza, jeśli istnieją */}
             {errors.length > 0 && (
                 <Alert variant="danger" className="mb-3">
                     {errors.map((error, index) => (
@@ -71,8 +88,10 @@ const Lab4Add = () => {
                 </Alert>
             )}
 
-            {/* Formularz */}
+            {/* Formularz dodawania nowej osoby */}
             <Form className="p-4 border rounded shadow-sm bg-light" onSubmit={onSubmitFunction}>
+                
+                {/* Pole Nazwa */}
                 <Row className="mb-3">
                     <Col>
                         <Form.Label htmlFor="name">Nazwa</Form.Label>
@@ -88,6 +107,7 @@ const Lab4Add = () => {
                     </Col>
                 </Row>
 
+                {/* Pole Data urodzenia */}
                 <Row className="mb-3">
                     <Col>
                         <Form.Label htmlFor="birth">Data urodzenia</Form.Label>
@@ -102,6 +122,7 @@ const Lab4Add = () => {
                     </Col>
                 </Row>
 
+                {/* Pole Kolor oczu */}
                 <Row className="mb-3">
                     <Col>
                         <Form.Label htmlFor="eyes">Kolor oczu</Form.Label>
@@ -117,6 +138,7 @@ const Lab4Add = () => {
                     </Col>
                 </Row>
 
+                {/* Pole Ocena */}
                 <Row className="mb-4">
                     <Col>
                         <Form.Label htmlFor="rating">Ocena (0-10)</Form.Label>

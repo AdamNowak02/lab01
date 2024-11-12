@@ -13,7 +13,7 @@ const UserDetails = () => {
 
   return (
     <Container className="mt-5">
-      <h2 className="text-center mb-4">Szczegóły użytkownika</h2>
+      <h2 className="text-center mb-4">User details</h2>
       
       <Card className="shadow-sm">
         <Card.Body>
