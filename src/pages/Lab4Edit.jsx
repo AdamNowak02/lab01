@@ -68,7 +68,7 @@ const Lab4Edit = () => {
                     rating: data.rating,
                 },
             });
-            alert(`Zaktualizowano dane osoby o ID: ${id}`);
+            alert(`Zaktualizowano dane`);
             navigate("/lab3"); // Przekierowanie po zapisaniu zmian
         } else {
             alert(`Nie znaleziono osoby o ID: ${id}`); // Komunikat o błędzie
@@ -88,7 +88,7 @@ const Lab4Edit = () => {
                         <Form.Control
                             type="number"
                             {...register("id", {
-                                required: "ID wymagane",
+                                required: "wymagane",
                                 onChange: handleIdChange, // Obsługa zmiany ID
                             })}
                             isInvalid={!!errors.id}

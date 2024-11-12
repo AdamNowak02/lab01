@@ -17,7 +17,7 @@ const UserDetails = () => {
       
       <Card className="shadow-sm">
         <Card.Body>
-          {/* Imię z miętowym tłem */}
+          {/* Imię z zielonym tłem */}
           <Card.Title className="p-3" style={{ backgroundColor: '#e0f7f3' }}>
             {user.name}
           </Card.Title>
